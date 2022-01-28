@@ -5,7 +5,7 @@ const adminController = require('../../controllers/admin/adminController');
 
 //*  Admin routes 
 
-AdminRoute.post('/create', () => { adminController.insertAdminForm });
+AdminRoute.post('/', adminController.insertAdminForm );
 
 
 // AdminRoute.get('/', adminController);

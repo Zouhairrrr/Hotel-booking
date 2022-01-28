@@ -12,12 +12,17 @@ adminTable = mongoose.model('adminTable', adminSchema);
 //* create new admin
 
 const CreateAdmin = async (data, callback) => {
+    console.log(data);
 
-    const adminData = new adminTable(data);
-    await adminData.save((err, data) => {
-        if (err) throw err;
-        return callback(data);
+    await adminTable.create(data, (err, res) => {
+        if (err) return console.error(err);
+        return callback(res);
     });
+    // await adminData.save((err, data) => {
+    //     if (err) throw err;
+    //     return callback(data);
+    // });
+
 }
 
 //* update admin
@@ -45,7 +50,7 @@ const fetchAdmin = async (callback) => {
 
 //* delete admin
 
-const DeleteAdmin = async (data, callback)=> {}
+const DeleteAdmin = async (data, callback) => { }
 
 
 
