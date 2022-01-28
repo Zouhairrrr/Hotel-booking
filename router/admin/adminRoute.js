@@ -1,8 +1,17 @@
 const express = require('express');
-const AdminRoute  = express.Router();
+const AdminRoute = express.Router();
+const adminController = require('../../controllers/admin/adminController');
 
 
-AdminRoute.post('/', async (req, res) => { adminController.InsertAdmin(req, res); });
+//*  Admin routes 
+
+AdminRoute.post('/create', () => { adminController.insertAdminForm });
 
 
-AdminRoute.get('/', () => require())
+// AdminRoute.get('/', adminController);
+// AdminRoute.get('/data-list', adminController);
+// AdminRoute.get('/edit/:id', adminController);
+// AdminRoute.post('/edit/:id', adminController);
+// AdminRoute.get('/delete/:id', adminController);
+
+module.exports = AdminRoute;
