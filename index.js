@@ -1,15 +1,19 @@
 const express = require('express')
+const adminRoute = require('./router/admin/adminRoute')
+
+
 
 const app = express();
 app.use(express.json())
 
 
 
+// * Admin route
+app.use('/dashnbard/admin', adminRoute);
 
 
-// app.use(bodyParser.json());
 
-// app.use('/api/user', userRoute);
+
 // app.use('/api/hotel', hotelRoute);
 // app.use('/api/room', roomRoute);
 // app.use('/api/booking', bookingRoute);
