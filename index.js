@@ -1,5 +1,6 @@
-const express = require('express')
-const adminRoute = require('./router/admin/adminRoute')
+const express = require('express');
+const mongoose = require('mongoose');
+const adminRoute = require('./router/admin/adminRoute');
 
 
 
@@ -18,8 +19,13 @@ app.use('/dashnbard/admin', adminRoute);
 // app.use('/api/room', roomRoute);
 // app.use('/api/booking', bookingRoute);
 
-
-
-app.listen(3001, () => {
-    console.log('server is runing at  http://localhost:3001');
+const DB = 'mongodb://localhost:27017/booking';
+mongoose.connect(DB).then(() => {
+    app.listen(3001, () => {
+        console.log('server is runing at  http://localhost:3001');
+    });
+    console.log('Connection Successed !!');
+}).catch(err => {
+    console.log(err);
 });
+
