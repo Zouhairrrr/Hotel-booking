@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const adminRoute = require('./router/admin/adminRoute');
+const hotelRoute = require('./router/hotel');
 
 
 
@@ -11,8 +12,9 @@ app.use(express.json())
 
 // * Admin route
 app.use('/dashnbard/admin', adminRoute);
-
-
+app.use('/hotels', hotelRoute);
+// * Hotel route
+// app.use('/', )
 
 
 // app.use('/api/hotel', hotelRoute);
