@@ -1,5 +1,4 @@
 const router = require('express').Router();
-// const Hotel = require('../models/HotelModel');
 const hotelConroller = require('../controllers/HotelController');
 
 
