@@ -3,23 +3,6 @@ const Hotel = require("../models/HotelModel");
 // Create Hotel
 exports.createHotel = async (req, res, next) => {
 
-    // const hotel = new Hotel({
-    //     // owner: req.body.owner,
-    //     name: req.body.name,
-    //     // location: req.body.location,
-    //     description: req.body.description,
-    // });
-    // Hotel.addHotel(hotel, (err, response) => {
-    //     if(err){
-    //         console.log(err);
-    //         res.json({success: false, msg: "Failed to add hotel"});
-    //     }
-    //     else{
-    //         res.json({success: true, msg: "Hotel added"});
-    //     }
-    // });
-
-
     try {
         const hotel = await Hotel.create({
             name: req.body.name,
@@ -36,14 +19,6 @@ exports.createHotel = async (req, res, next) => {
     }
 
 }
-
-// Get all hotels
-// exports.showHotels = (req, res, next) => {
-
-
-//     //
-
-// }
 
 // Get one hotel by ID
 exports.getOneHotel = (req, res, next) => {
