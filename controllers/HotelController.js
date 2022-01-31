@@ -1,23 +1,41 @@
+const Hotel = require("../models/HotelModel");
+
 // Create Hotel
-exports.createHotel = (req, res, next) => {
-    
-        const hotel = new Hotel({
-            _id: mongoose.Types.ObjectId(),
-            // owner: req.body.owner,
+exports.createHotel = async (req, res, next) => {
+
+    // const hotel = new Hotel({
+    //     // owner: req.body.owner,
+    //     name: req.body.name,
+    //     // location: req.body.location,
+    //     description: req.body.description,
+    // });
+    // Hotel.addHotel(hotel, (err, response) => {
+    //     if(err){
+    //         console.log(err);
+    //         res.json({success: false, msg: "Failed to add hotel"});
+    //     }
+    //     else{
+    //         res.json({success: true, msg: "Hotel added"});
+    //     }
+    // });
+
+
+    try {
+        const hotel = await Hotel.create({
             name: req.body.name,
             // location: req.body.location,
             description: req.body.description,
         });
-        Hotel.addHotel(hotel, (err, response) => {
-            if(err){
-                console.log(err);
-                res.json({success: false, msg: "Failed to add hotel"});
-            }
-            else{
-                res.json({success: true, msg: "Hotel added"});
-            }
+
+        res.status(200).json({
+            status: "success",
+            data: hotel
         });
+    } catch (err) {
+        console.log(err);
     }
+
+}
 
 // Get all hotels
 // exports.showHotels = (req, res, next) => {
@@ -32,12 +50,17 @@ exports.getOneHotel = (req, res, next) => {
 
     const hotel = req.params.hotel;
     Hotel.getHotel(hotel, (err, response) => {
-        if(err){
+        if (err) {
             console.log(err);
-            res.json({success: false, msg: "No such hotel exists"});
-        }
-        else{
-            res.json({success: true, hotel: response});
+            res.json({
+                success: false,
+                msg: "No such hotel exists"
+            });
+        } else {
+            res.json({
+                success: true,
+                hotel: response
+            });
         }
     });
 };
@@ -48,28 +71,38 @@ exports.updateHotel = (req, res, next) => {
     const id = req.params.hotel;
     const hotel = req.body;
     Hotel.updateHotel(id, hotel, (err, response) => {
-        if(err){
+        if (err) {
             console.log(err);
-            res.json({success: false, msg: "Failed to update hotel"});
-        }
-        else{
-            res.json({success: true, msg: "Hotel updated"});
+            res.json({
+                success: false,
+                msg: "Failed to update hotel"
+            });
+        } else {
+            res.json({
+                success: true,
+                msg: "Hotel updated"
+            });
         }
     });
 };
 
 
 // Delete Hotel
-exports.deleteHotel = (req, res, next) => {
+exports.deletHotel = (req, res, next) => {
 
     const hotel = req.params.hotel;
     Hotel.deleteHotel(hotel, (err, response) => {
-        if(err){
+        if (err) {
             console.log(err);
-            res.json({success: false, msg: "Failed to delete hotel"});
-        }
-        else{
-            res.json({success: true, msg: "Hotel deleted"});
+            res.json({
+                success: false,
+                msg: "Failed to delete hotel"
+            });
+        } else {
+            res.json({
+                success: true,
+                msg: "Hotel deleted"
+            });
         }
     });
 };
