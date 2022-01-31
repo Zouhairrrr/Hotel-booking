@@ -20,12 +20,12 @@ exports.createHotel = (req, res, next) => {
     }
 
 // Get all hotels
-exports.showHotels = (req, res, next) => {
+// exports.showHotels = (req, res, next) => {
 
 
-    //
+//     //
 
-}
+// }
 
 // Get one hotel by ID
 exports.getOneHotel = (req, res, next) => {
