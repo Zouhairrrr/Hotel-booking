@@ -1,40 +1,23 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const db = require('./config/db')
-const app = express();
 
-//? admin Route:
-const adminRoute = require('./router/admin/adminRoute')
-
-//? user Route: 
-//! const userRoute = require('./router/userRoute')
-
-// const bodyParser = require('body-parser')
+const express = require('express');
+const mongoose = require('mongoose');
+const adminRoute = require('./router/admin/adminRoute');
+const hotelRoute = require('./router/hotel');
 
 
+// * Admin route
+
+app.use('/dashnbard/admin', adminRoute);
+app.use('/hotels', hotelRoute);
 
 
-mongoose.connect(db.database)
-
-
-mongoose.connection.on('connected', () => {
-    console.log('db connection established' + db.database);
+const DB = 'mongodb://localhost:27017/booking';
+mongoose.connect(DB).then(() => {
+    app.listen(3001, () => {
+        console.log('server is runing at  http://localhost:3001');
+    });
+    console.log('Connection Successed !!');
+}).catch(err => {
+    console.log(err);
 });
-mongoose.connection.on('error', (err) => {
-    console.log('error connecting to database' + err);
-})
 
-// app.use(bodyParser.json())
-app.use(express.json())
-
-
-
-//* define all users route:
-
-app.use('/admin', adminRoute);
-
-
-
-app.listen(3002, () => {
-    console.log('server is runing at  http://localhost:3002');
-});
