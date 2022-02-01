@@ -1,11 +1,10 @@
 const Admin = require('../../models/admin/adminModel')
 
 
-//? admin Insert to database
+//! admin Insert to database
 
 const insertAdminForm = async (req, res) => {
     const bodyData = req.body;
-    // console.log("aaa");
     await Admin.CreateAdmin(bodyData, (error, data) => {
         if (error) {
             console.log('ERROR => ' + error);
@@ -15,32 +14,40 @@ const insertAdminForm = async (req, res) => {
     })
 }
 
-//? get admin if exists
+//! get admin if exists
 
 const getAdmin = async (req, res) => {
-    const adminEmail = req.params.email;
-    // const bodyData = req.body;
-    try {
-        await Admin.getAdmin(adminEmail, (data) => res.send(data));
-        // console.log(adminEmail);
-    } catch (error) {
-        console.log('ERROR geting admin ' + error);
-        return res.sendStatus(500).json(error);
-    }
+    const adminId = req.params.id;
+    await Admin.getAdmin(adminId, (err, response) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(response);
+        }
+    });
 }
 
+//! find all admin 
 
+const findAllAdmins = async (req, res) => {
+    await Admin.findALLAdmin((err, response) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(response);
+        }
+    });
+}
+
+//! update admin 
 
 const UpdateAdmin = async (req, res) => {
+    
     const bodyData = req.body;
-    try {
-        await Admin.CreateAdmin(bodyData, (data) => res.send(data));
-
-    } catch (error) {
-        console.log('ERROR createing admin => ' + error);
-        return res.sendStatus(500).json(error);
-    }
+    await Admin.CreateAdmin(bodyData, (data) => res.send(data));
 }
 
 
-module.exports = { insertAdminForm, UpdateAdmin, getAdmin };
+module.exports = { insertAdminForm, UpdateAdmin, getAdmin, findAllAdmins };
