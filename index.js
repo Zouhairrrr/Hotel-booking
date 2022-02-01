@@ -1,10 +1,15 @@
+const express = require('express')
+const mongoose = require('mongoose')
+const adminRoute = require('./router/admin/adminRoute')
+const db = require('./config/db')
+// const bodyParser = require('body-parser')
 
-const express = require('express');
-const mongoose = require('mongoose');
-const adminRoute = require('./router/admin/adminRoute');
 const hotelRoute = require('./router/hotel');
 const ownerRoute = require('./router/owner')
 const app = express();
+// app.use(bodyParser.json())
+app.use(express.json())
+
 
 app.use(express.json())
 
