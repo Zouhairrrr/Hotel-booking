@@ -7,11 +7,4 @@ const adminController = require('../../controllers/admin/adminController');
 
 AdminRoute.post('/', adminController.insertAdminForm );
 
-
-// AdminRoute.get('/', adminController);
-// AdminRoute.get('/data-list', adminController);
-// AdminRoute.get('/edit/:id', adminController);
-// AdminRoute.post('/edit/:id', adminController);
-// AdminRoute.get('/delete/:id', adminController);
-
 module.exports = AdminRoute;
