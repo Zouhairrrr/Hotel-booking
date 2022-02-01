@@ -12,40 +12,37 @@ adminTable = mongoose.model('adminTable', adminSchema);
 //* create new admin
 
 const CreateAdmin = async (data, callback) => {
-    console.log(data);
+    // console.log(data);
+    // data = req.body
+    try {
+        const admin = await adminTable.create(data);
+        // throw Error('Error creating admin')
+        callback(null, admin);
 
-    await adminTable.create(data, (err, res) => {
-        if (err) return console.error(err);
-        return callback(res);
-    });
-    // await adminData.save((err, data) => {
-    //     if (err) throw err;
-    //     return callback(data);
-    // });
-
+    } catch (error) {
+        callback(error)
+    }
 }
+
+//* get if admin exists
+
+const getAdmin = async (data, callback) => {
+
+    // const adminEmail = { email: email };
+    try {
+        await adminData.findOne(data, callback);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 
 //* update admin
 
 const UpdateAdmin = async (data, callback) => {
-
-    const adminData = new adminTable(data);
-    await adminData.findByIdAndUpdate((err, data) => {
-        if (err) throw err;
-        return callback(data);
-    });
-}
-
-
-//* check if admin exists
-
-const fetchAdmin = async (callback) => {
-
-    const adminData = mongoose.find({});
-    await adminData.exec((err, data) => {
-        if (err) throw err;
-        return callback(data)
-    })
+    const adminData = { data: data };
+    await adminData.findByIdAndUpdate(adminData, callback);
 }
 
 //* delete admin
@@ -55,4 +52,7 @@ const DeleteAdmin = async (data, callback) => { }
 
 
 
-module.exports = { CreateAdmin, UpdateAdmin, fetchAdmin, DeleteAdmin };
+module.exports = { CreateAdmin, UpdateAdmin, getAdmin, DeleteAdmin };
+
+
+
