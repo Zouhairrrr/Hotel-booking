@@ -8,6 +8,10 @@ var  hotelSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Hotel must have a description']
     },
+    localisation: {
+        type: String,
+        required: [true, 'Hotel must have a localisation']
+    },
     // imageCover :{
     //     type: String,
     //     required: [true, 'Hotel must have an image']

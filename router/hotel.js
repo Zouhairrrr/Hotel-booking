@@ -6,7 +6,7 @@ router.get('/hotel/:hotel',hotelConroller.getOneHotel);
 
 router.post('/add',hotelConroller.createHotel);
 
-router.post('/delete/:hotel',hotelConroller.deletHotel);
+router.delete('/delete/:hotel',hotelConroller.deletHotel);
 
 router.patch('/update/:hotel',hotelConroller.updateHotel );
 

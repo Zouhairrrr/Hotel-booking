@@ -6,7 +6,7 @@ exports.createHotel = async (req, res, next) => {
     try {
         const hotel = await Hotel.create({
             name: req.body.name,
-            // location: req.body.location,
+            localisation: req.body.localisation,
             description: req.body.description,
         });
 
@@ -42,42 +42,31 @@ exports.getOneHotel = (req, res, next) => {
 
 
 // Update Hotel
-exports.updateHotel = (req, res, next) => {
+exports.updateHotel = async (req, res, next) => {
     const id = req.params.hotel;
-    const hotel = req.body;
-    Hotel.updateHotel(id, hotel, (err, response) => {
-        if (err) {
-            console.log(err);
-            res.json({
-                success: false,
-                msg: "Failed to update hotel"
-            });
-        } else {
-            res.json({
-                success: true,
-                msg: "Hotel updated"
-            });
-        }
-    });
+    // const hotel = req.body;
+    try {
+        const hotel = await Hotel.findById(id);
+        Object.assign(hotel, req.body);
+        hotel.save();
+        return res.send({
+            message: hotel
+        });
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 
 // Delete Hotel
-exports.deletHotel = (req, res, next) => {
+exports.deletHotel = async (req, res, next) => {
 
-    const hotel = req.params.hotel;
-    Hotel.deleteHotel(hotel, (err, response) => {
-        if (err) {
-            console.log(err);
-            res.json({
-                success: false,
-                msg: "Failed to delete hotel"
-            });
-        } else {
-            res.json({
-                success: true,
-                msg: "Hotel deleted"
-            });
-        }
-    });
+    const id = req.params.hotel;
+    try {
+        const hotel = await Hotel.findById(id);
+        await hotel.remove();
+        res.send();
+    } catch (err) {
+        res.send(err);
+    }
 };
