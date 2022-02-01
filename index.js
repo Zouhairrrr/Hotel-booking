@@ -3,12 +3,19 @@ const express = require('express');
 const mongoose = require('mongoose');
 const adminRoute = require('./router/admin/adminRoute');
 const hotelRoute = require('./router/hotel');
+const ownerRoute = require('./router/owner')
+const app = express();
 
+app.use(express.json())
 
 // * Admin route
 
 app.use('/dashnbard/admin', adminRoute);
 app.use('/hotels', hotelRoute);
+app.use('/api/owner', ownerRoute);
+
+
+
 
 
 const DB = 'mongodb://localhost:27017/booking';
@@ -20,4 +27,3 @@ mongoose.connect(DB).then(() => {
 }).catch(err => {
     console.log(err);
 });
-
