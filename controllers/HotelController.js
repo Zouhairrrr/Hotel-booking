@@ -21,30 +21,37 @@ exports.createHotel = async (req, res, next) => {
 }
 
 // Get one hotel by ID
-exports.getOneHotel = (req, res, next) => {
+exports.getOneHotel = async (req, res, next) => {
 
-    const hotel = req.params.hotel;
-    Hotel.getHotel(hotel, (err, response) => {
-        if (err) {
-            console.log(err);
-            res.json({
-                success: false,
-                msg: "No such hotel exists"
-            });
-        } else {
-            res.json({
-                success: true,
-                hotel: response
-            });
-        }
-    });
+    const id = req.params.hotel;
+    try {
+        const hotel = await Hotel.findById(id);
+        res.status(200).json({
+            status: "succes",
+            data: hotel
+        });
+    } catch (err) {
+        res.send(err);
+    }
 };
 
+// Get All hotels 
+exports.getHotels = async (req, res, next) => {
+
+    try {
+        const hotels = await Hotel.find();
+        res.status(200).json({
+            status: "succes",
+            data: hotels
+        });
+    } catch (err) {
+        res.send(err);
+    }
+};
 
 // Update Hotel
 exports.updateHotel = async (req, res, next) => {
     const id = req.params.hotel;
-    // const hotel = req.body;
     try {
         const hotel = await Hotel.findById(id);
         Object.assign(hotel, req.body);
@@ -60,7 +67,6 @@ exports.updateHotel = async (req, res, next) => {
 
 // Delete Hotel
 exports.deletHotel = async (req, res, next) => {
-
     const id = req.params.hotel;
     try {
         const hotel = await Hotel.findById(id);
