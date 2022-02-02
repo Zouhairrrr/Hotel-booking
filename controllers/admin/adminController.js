@@ -1,7 +1,7 @@
 const Admin = require('../../models/admin/adminModel')
 
 
-//! admin Insert to database
+//* admin Insert to database
 
 const insertAdminForm = async (req, res) => {
     const bodyData = req.body;
@@ -14,7 +14,7 @@ const insertAdminForm = async (req, res) => {
     })
 }
 
-//! get admin if exists
+//* get admin if exists
 
 const getAdmin = async (req, res) => {
     const adminId = req.params.id;
@@ -41,7 +41,7 @@ const findAllAdmins = async (req, res) => {
     });
 }
 
-//! update admin 
+//? update admin 
 
 const UpdateAdmin = async (req, res) => {
     
