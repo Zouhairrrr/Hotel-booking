@@ -5,6 +5,7 @@ const app = express();
 
 //? admin Route:
 const adminRoute = require('./router/admin/adminRoute')
+// const adminMiddleware = require('./middleware/adminMiddelware')
 
 //? user Route: 
 //! const userRoute = require('./router/userRoute')
@@ -32,6 +33,8 @@ app.use(express.json())
 //* define all users route:
 
 app.use('/admin', adminRoute);
+
+// app.use('/api/admin',adminMiddleware);
 
 
 
