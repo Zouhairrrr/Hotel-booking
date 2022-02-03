@@ -1,13 +1,57 @@
 const Hotel = require("../models/HotelModel");
+// const multer = require('multer');
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, './uploads/');
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, new Date().toISOString() + file.originalname);
+//     },
+// });
+// const uploadImage = multer({
+//     storage: storage
+// }).single('imageCover');
 
+// Upload Image (Doesn't Work !!)
+// exports.uploadImage = async (req, res, next) => {
+//     try {
+//         const imageCover = await imageCover.uploads({
+
+//             imageCover: req.file.path,
+
+//         });
+
+//         res.status(200).json({
+//             status: "success Upload",
+//             // data: imageCover
+//         });
+
+//     } catch (err) {
+//         console.log(err);
+//     }
+//     next();
+
+// }
 // Create Hotel
 exports.createHotel = async (req, res, next) => {
-
+    console.log(req.body.localisation);
+    const {
+        city,
+        country
+    } = req.body.localisation
+    console.log(req.body.stars);
     try {
         const hotel = await Hotel.create({
             name: req.body.name,
-            localisation: req.body.localisation,
             description: req.body.description,
+            localisation: {
+                city,
+                country
+            },
+            price: req.body.price,
+            starts: req.body.stars,
+            // imageCover: req.file.path,
+            // images: req.body.images,
         });
 
         res.status(200).json({
