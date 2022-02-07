@@ -1,18 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-// const adminRoute = require('./router/admin/adminRoute')
 const hotelRoute = require("./router/hotel");
 const ownerRoute = require("./router/owner");
 const clientRoute = require("./router/client");
+const roomRoute = require("./router/room");
 
 const app = express();
 app.use(express.json());
 
-// app.use("/dashnbard/admin", adminRoute);
 app.use("/hotels", hotelRoute);
 app.use("/owners", ownerRoute);
 app.use("/clients", clientRoute);
+app.use("/rooms", roomRoute);
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/booking-hotel")
