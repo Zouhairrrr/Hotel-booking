@@ -1,3 +1,4 @@
+const console = require("console");
 const Hotel = require("../models/HotelModel");
 // const multer = require('multer');
 // const storage = multer.diskStorage({
@@ -34,12 +35,16 @@ const Hotel = require("../models/HotelModel");
 // }
 // Create Hotel
 exports.createHotel = async (req, res, next) => {
-    console.log(req.body.localisation);
+    // console.log(req.body.localisation);
+    const images = req.files.map((file) => {
+        return file.path
+    })
+    // return res.send(images)
     const {
         city,
         country
     } = req.body.localisation
-    console.log(req.body.stars);
+    // console.log(req.body.stars);
     try {
         const hotel = await Hotel.create({
             name: req.body.name,
@@ -51,7 +56,7 @@ exports.createHotel = async (req, res, next) => {
             price: req.body.price,
             starts: req.body.stars,
             // imageCover: req.file.path,
-            // images: req.body.images,
+            images: images,
         });
 
         res.status(200).json({
@@ -116,6 +121,40 @@ exports.deletHotel = async (req, res, next) => {
         const hotel = await Hotel.findById(id);
         await hotel.remove();
         res.send();
+    } catch (err) {
+        res.send(err);
+    }
+};
+
+// Get Hotel by name 
+exports.getHotelbyname = async (req, res, next) => {
+    const {
+        name
+    } = req.params;
+    try {
+        const hotel = await Hotel.findOne({
+            name: new RegExp('^' + name + '$', "i")
+        });
+        res.status(200).json({
+            status: "succes",
+            data: hotel
+        });
+    } catch (err) {
+        res.send(err);
+    }
+};
+
+
+// Get Hotels by city
+exports.getHotelbycity = async (req, res, next) => {
+    try {
+        const hotel = await Hotel.find({
+            city: req.body.city,
+        });
+        res.status(200).json({
+            status: "succes",
+            data: hotel
+        });
     } catch (err) {
         res.send(err);
     }

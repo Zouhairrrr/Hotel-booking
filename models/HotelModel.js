@@ -30,10 +30,10 @@ var hotelSchema = new mongoose.Schema({
     //     type: String,
     //     required: [true, 'Hotel must have a cover image']
     // },
-    // images: [{
-    //     type: String,
-    //     required: [true, 'Hotel must have at least 4 images']
-    // }],
+    images: [{
+        type: String,
+        required: [true, 'Hotel must have at least 4 images']
+    }],
 });
 
 const Hotel = mongoose.model('hotel', hotelSchema);
