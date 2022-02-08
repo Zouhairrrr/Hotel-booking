@@ -8,12 +8,16 @@ router.get('/', hotelConroller.getHotels);
 
 router.get('/:name', hotelConroller.getHotelbyname);
 
-router.get('/city', hotelConroller.getHotelbycity);
+router.get('/city/:city', hotelConroller.getHotelbycity);
+
+router.get('/stars/:stars', hotelConroller.getHotelbystars);
 
 router.post('/add', upload.array("images"), hotelConroller.createHotel);
 // hotelConroller.uploadImage,
 
 router.delete('/delete/:hotel', hotelConroller.deletHotel);
+
+router.delete('/delete', hotelConroller.deletallHotels);
 
 router.patch('/update/:hotel', hotelConroller.updateHotel);
 

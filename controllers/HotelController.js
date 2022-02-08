@@ -19,7 +19,7 @@ exports.createHotel = async (req, res, next) => {
                 country
             },
             price: req.body.price,
-            starts: req.body.stars,
+            stars: req.body.stars,
             images: images,
         });
 
@@ -77,11 +77,23 @@ exports.updateHotel = async (req, res, next) => {
 };
 
 
-// Delete Hotel
+// Delete one Hotel
 exports.deletHotel = async (req, res, next) => {
     const id = req.params.hotel;
     try {
         const hotel = await Hotel.findById(id);
+        await hotel.remove();
+        res.send();
+    } catch (err) {
+        res.send(err);
+    }
+};
+
+// Delete all hotels
+exports.deletallHotels = async (req, res, next) => {
+    // const id = req.params.hotel;
+    try {
+        const hotel = await Hotel.find();
         await hotel.remove();
         res.send();
     } catch (err) {
@@ -108,11 +120,29 @@ exports.getHotelbyname = async (req, res, next) => {
 };
 
 
+
 // Get Hotels by city
 exports.getHotelbycity = async (req, res, next) => {
+    // return res.send(req.params)
     try {
         const hotel = await Hotel.find({
-            city: req.body.city,
+            "localisation.city": req.params.city,
+        });
+        res.status(200).json({
+            status: "succes",
+            data: hotel
+        });
+    } catch (err) {
+        res.send(err);
+    }
+};
+
+// Get Hotels by stars
+exports.getHotelbystars = async (req, res, next) => {
+    // return res.send(req.params)
+    try {
+        const hotel = await Hotel.find({
+            stars: req.params.stars,
         });
         res.status(200).json({
             status: "succes",

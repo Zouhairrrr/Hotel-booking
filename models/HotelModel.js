@@ -22,14 +22,10 @@ var hotelSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Hotel must have a price']
     },
-    starts: {
+    stars: {
         type: String,
         required: [true, 'Hotel must have a stars']
     },
-    // imageCover: {
-    //     type: String,
-    //     required: [true, 'Hotel must have a cover image']
-    // },
     images: [{
         type: String,
         required: [true, 'Hotel must have at least 4 images']
