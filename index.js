@@ -2,6 +2,8 @@ const express = require('express')
  
 const mongoose = require('mongoose')
 const ownerRoute = require('./router/owner')
+const reserveRoute = require('./router/reservation')
+const chambreRoute = require('./router/chambre')
 
 
 
@@ -14,7 +16,9 @@ app.get('/', (req, res) => {
 
 // * Admin route
 app.use('/api/owner', ownerRoute);
- 
+app.use('/api/reserve', reserveRoute);
+app.use('/api/chambre', chambreRoute);
+
 mongoose.connect('mongodb://127.0.0.1:27017/booking-hotel')
         .then(console.log("connected"))
         .catch(err => console.log("error " + err))

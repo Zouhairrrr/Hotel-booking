@@ -1,7 +1,9 @@
 const req = require('express/lib/request')
 const res = require('express/lib/response')
 const Owner = require('../models/ownerModel')
-const bcrypt = require('bcrypt');
+require("dotenv").config();
+const bcrypt = require('bcryptjs')
+const JWT = require('jsonwebtoken')
 
 const allOwners = async (req,res)=>{
     const owners = await Owner.find({role: "owner"}).catch(e=>console.log(e));
@@ -47,7 +49,6 @@ const update = async (req, res) => {
         (owner.name = req.body.name),
         (owner.email = req.body.email),
         (owner.role = req.body.role),
-        (owner.active = req.body.active),
         owner
           .save()
           .then(() => {
@@ -84,11 +85,22 @@ const update = async (req, res) => {
   };
 
 
+  const login = async (req, res) => {
+    const owner = await Owner.findOne({email : req.body.email,})
+    if (!owner) return res.status(400).send("Email is not exists")
+
+    const validPass = await bcrypt.compare(req.body.password, owner.password);
+    if (!validPass) return res.status(400).send("Password invalid")
+
+    const token = JWT.sign({id : owner._id, name: owner.name, email: owner.email}, process.env.TOKEN_SECRET)
+    res.header("auth-token", token).send(token)
+  }
 
 module.exports ={
     create,
     allOwners,
     update,
     oneOwner,
-    deleteOwner
+    deleteOwner,
+    login,
 }
