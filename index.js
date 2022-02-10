@@ -2,16 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const hotelRoute = require("./router/hotel");
-const ownerRoute = require("./router/owner");
-const clientRoute = require("./router/client");
+const userRoute = require("./router/user");
 const roomRoute = require("./router/room");
 
 const app = express();
 app.use(express.json());
 
 app.use("/hotels", hotelRoute);
-app.use("/owners", ownerRoute);
-app.use("/clients", clientRoute);
+app.use("/users", userRoute);
 app.use("/rooms", roomRoute);
 
 mongoose
