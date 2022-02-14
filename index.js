@@ -1,9 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-// const multer = require('multer');
-// const upload = multer({
-//     dest: 'uploads/'
-// });
 const adminRoute = require('./router/admin/adminRoute');
 const hotelRoute = require('./router/hotel');
 
