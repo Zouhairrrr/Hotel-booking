@@ -90,15 +90,28 @@ exports.deletHotel = async (req, res, next) => {
 };
 
 // Delete all hotels
-exports.deletallHotels = async (req, res, next) => {
-    // const id = req.params.hotel;
-    try {
-        const hotel = await Hotel.find();
-        await hotel.remove();
-        res.send();
-    } catch (err) {
-        res.send(err);
-    }
+// exports.deletallHotels = async (req, res, next) => {
+//     const deleteall = db.inventory.deleteMany({})
+//     try {
+//         const hotel = await Hotel.find();
+//         await hotel.remove();
+//         res.send();
+//     } catch (err) {
+//         res.send(err);
+//     }
+// };
+
+
+exports.deletallHotels = (req, res) => {
+    Hotel.deleteMany({})
+        .then(data => {
+            res.send({
+                message: `${data.deletedCount} Hotels were deleted successfully!`
+            });
+        })
+        .catch(err => {
+
+        });
 };
 
 // Get Hotel by name 
