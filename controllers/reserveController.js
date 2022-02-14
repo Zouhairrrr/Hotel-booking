@@ -27,29 +27,69 @@ const create = async (req, res) => {
     }
 
     const reservId = await Reserv.findOne({ chambre: req.params.id });
-    if (reservId) {
-        daate = parseInt(reservId.fromeDate.getTime() / 1000, 10)
+ 
+    if(reservId){
+    checkIn = parseInt(reservId.fromeDate.getTime() / 1000, 10)
+    checkOut = parseInt(reservId.toDate.getTime() / 1000, 10)
     }
-    if (reservId && checkInDate === daate) {
-            res.status(400).send({
-                status: "reserved ",
-            })
-
+    if (!reservId || (reservId && checkInDate > checkIn && checkOutDate > checkIn) || (reservId && checkInDate < checkOut && checkOutDate < checkOut )) {
+          
+            try {
+                const savedReserv = await reserv.save();
+                return res.status(200).send({reserv: savedReserv})
+            } catch (e){
+                res.status(400).send({
+                    status: "Failed",
+                    msg: e
+                })
+            }
+            
+    }
+    res.status(400).send({
+        status: "already reserved ",
+        
+    })
+    return
         }
-        try {
-            const savedReserv = await reserv.save();
-            res.status(200).send({reserv: savedReserv})
-        } catch (e){
-            res.status(400).send({
-                status: "Failed",
-                msg: e
-            })
-        }
-}
+     
 
+        const deleteReservation = async (req, res) => {
+            try {
+              const id = req.params.id;
+              const reservation = await Reserv.deleteOne({ _id: id });
+              if (!reservation) return res.status(200).send("reservation not deleted");
+              return res.status(200).send("reservation deleted");
+            } catch (error) {
+              console.log(error.message);
+              res.status(500).send(error.message);
+            }
+          };
 
 module.exports = {
     create,
     allReserv,
+    deleteReservation
 
 }
+
+
+    // const reservId = await Reserv.find(
+    //     {$or: [
+    //            { chambre: { $not: {$in: reserv.chambre}}},
+    //            { $and:[
+    //               {chambre: {$in: reserv.chambre}},
+    //               {$or: [
+    //                 {$and:[
+    //                   {fromeDate: {$lt: reserv.fromeDate}},
+    //                   {fromeDate: {$lt: reserv.toDate}}
+    //                 ]},
+    //                 {$and:[
+    //                   {toDate: {$gt: reserv.fromeDate}},
+    //                   {toDate: {$gt: reserv.toDate}}
+    //                 ]}
+    //               ]}
+    //           ]}
+    //          ]
+    //     })
+
+    
