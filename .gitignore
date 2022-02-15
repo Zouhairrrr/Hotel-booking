@@ -5,6 +5,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# ignore uploaded fiels
+
+uploads
+
+
 # Runtime data
 pids
 *.pid
