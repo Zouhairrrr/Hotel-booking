@@ -33,7 +33,7 @@ const CreateNewUser = async (req, res) => {
 
 }
 const Authenticate = async (req, res) => {
-   
+
     try {
         const bodyData = req.body;
         const user = await userModel.findOne({ email: bodyData.email });
