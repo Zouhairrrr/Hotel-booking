@@ -48,6 +48,7 @@ const Authenticate = async (req, res) => {
             }, config.secret)
             return res.send({ ..._doc, token });
         }
+        
     } catch (error) {
         console.log('ERROR => ' + error);
         return res.sendStatus(500).json(error);
