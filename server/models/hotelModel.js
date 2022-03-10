@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const hotelSchema = new mongoose.Schema({
+var hotelSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Hotel must have a name']
@@ -30,16 +30,8 @@ const hotelSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Hotel must have at least 4 images']
     }],
-    roomId: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Room'
-    },
-    userId: {
-        type: mongoose.Types.ObjectId,
-        ref: "User"
-    },
 });
 
-const HotelModel = mongoose.model('Hotel', hotelSchema);
+const Hotel = mongoose.model('hotel', hotelSchema);
 
-module.exports = HotelModel;
+module.exports = Hotel;
