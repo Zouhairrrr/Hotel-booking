@@ -2,12 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const adminRoute = require('./router/admin/adminRoute');
 const hotelRoute = require('./router/hotel');
-
+const cors = require('cors');
 const app = express();
-app.use(express.json())
 
 
-
+app.use(cors({
+    origin:'*'
+}))
+app.use(express.json()) 
 app.use('/dashnbard/admin', adminRoute);
 app.use('/hotels', hotelRoute);
 
@@ -21,3 +23,5 @@ mongoose.connect(DB).then(() => {
 }).catch(err => {
     console.log(err);
 });
+
+

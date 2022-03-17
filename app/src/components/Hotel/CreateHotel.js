@@ -1,125 +1,163 @@
-// import React from 'react';
-// import { Link} from 'react-router-dom';
-// // import React, {useState} from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
+function CreateHotel() {
+  const [hotel, setHotel] = useState({
+    name: "",
+    description: "",
+    price: "",
+    stars: "",
+    city: "",
+    country: "",
+  });
 
-// const CreateHotel = () => {
-//     const url="";
-//     const [data,setData]=useState({
-//         name: "",
-//         description: "",
-//         country:"",
-//         city:"",
-//         stars:"",
-//     })
-//     function handle(e){
-//         const newdata={...data}
-//         newdata[e.target.id] = e.target.value
-//         setData(newData)
-//         console.log(newData);
-//     }
+  const [images, setImages] = useState([]);
 
-//     return (
-//         <>
-//             <section className="section section-shaped section-lg my-0">
-//                 <div className="shape shape-style-1 shape-zah">
-//                     <span></span>
-//                     <span></span>
-//                     <span></span>
-//                     <span></span>
-//                     <span></span>
-//                     <span></span>
-//                     <span></span>
-//                     <span></span>
-//                 </div>
-//                 <div className="container pt-lg-md">
-//                     <div className="row justify-content-center">
-//                         <div className="col-lg-5">
-//                             <div className="card bg-secondary shadow border-0">
-//                                 <div className="card-header bg-white pb-5">
-//                                     <div className="text-muted text-center mb-3">
-//                                         <small>Sign up with</small>
-//                                     </div>
-//                                     <div className="text-center">
-//                                         <Link to="#" className="btn btn-neutral btn-icon mr-4">
-//                                             <span className="btn-inner--icon">
-//                                                 <img src="../assets/img/icons/common/github.svg" alt="images" />
-//                                             </span>
-//                                             <span className="btn-inner--text">Github</span>
-//                                         </Link>
-//                                         <Link to="#" className="btn btn-neutral btn-icon">
-//                                             <span className="btn-inner--icon">
-//                                                 <img src="../assets/img/icons/common/google.svg" alt="images" />
-//                                             </span>
-//                                             <span className="btn-inner--text">Google</span>
-//                                         </Link>
-//                                     </div>
-//                                 </div>
-//                                 <div className="card-body px-lg-5 py-lg-5">
-//                                     <div className="text-center text-muted mb-4">
-//                                         <small>Or sign up with credentials</small>
-//                                     </div>
-//                                     <form method="post" >
-//                                         <div className="form-group">
-//                                             <div className="input-group input-group-alternative mb-3">
-//                                                 <div className="input-group-prepend">
-//                                                     <span className="input-group-text"><i className="ni ni-hat-3"></i></span>
-//                                                 </div>
-//                                                 <input
-//                                                     name="name"
-//                                                     className="form-control" placeholder="Name" type="text"
-//                                                 />
-//                                             </div>
-//                                         </div>
-//                                         <div className="form-group">
-//                                             <div className="input-group input-group-alternative mb-3">
-//                                                 <div className="input-group-prepend">
-//                                                     <span className="input-group-text"><i className="ni ni-email-83"></i></span>
-//                                                 </div>
-//                                                 <input
-//                                                     name="email"
-//                                                     className="form-control" placeholder="Email" type="email" />
-//                                             </div>
-//                                         </div>
-//                                         <div className="form-group">
-//                                             <div className="input-group input-group-alternative">
-//                                                 <div className="input-group-prepend">
-//                                                     <span className="input-group-text"><i className="ni ni-lock-circle-open"></i></span>
-//                                                 </div>
-//                                                 <input
-//                                                     name="password"
-//                                                     // onChange={(e) => setPassword(e.target.value)}
-//                                                     className="form-control" placeholder="Password" type="password" />
-//                                             </div>
-//                                         </div>
-//                                         <div className="text-muted font-italic">
-//                                             <small>password strength:
-//                                                 <span className="text-success font-weight-700">strong</span>
-//                                             </small>
-//                                         </div>
-//                                         <div className="row my-4">
-//                                             <div className="col-12">
-//                                                 <div className="custom-control custom-control-alternative custom-checkbox">
-//                                                     <input className="custom-control-input" id="customCheckRegister" type="checkbox" />
-//                                                     <label className="custom-control-label" htmlFor="customCheckRegister">
-//                                                         <span>Already registered?
-//                                                             <Link to="/">LOGIN</Link>
-//                                                         </span>
-//                                                     </label>
-//                                                 </div>
-//                                             </div>
-//                                         </div>
-//                                         <div className="text-center">
-//                                             <button type="button" className="btn btn-primary mt-4">Create account</button>
-//                                         </div>
-//                                     </form>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </section>
-//         </>
-//     );
-// }
-// export default CreateHotel;
+  //   const [sa,setSa]=useState('')
+
+  const { name, description, price, stars, city, country } = hotel;
+
+  //   useEffect(()=>{setSa(state.name)},[state.name])
+
+  const navigate = useNavigate();
+
+  const addHotel = async (data) => {
+    const response = await axios.post("http://localhost:3001/hotels/add", data);
+    if (response.status === 200) {
+      toast.success(response.data);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //   console.log(!name || !description || !price || !stars || !city || !country)
+    const formData = new FormData();
+    formData.append('name',name);
+    formData.append('description',description);
+    formData.append('price',price);
+    formData.append('stars',stars);
+    formData.append('localisation[city]',city);
+    formData.append('localisation[country]',country);
+    images.map((image) => formData.append("images", image));
+
+    if (
+      !name ||
+      !description ||
+      !price ||
+      !stars ||
+      !city ||
+      !country ||
+      !images
+    ) {
+      toast.error("Please enter smtng");
+      return 0;
+    } else {
+      addHotel(formData);
+    }
+  };
+  const handelInputChange = (e) => {
+    let { name, value } = e.target;
+    setHotel({ ...hotel, [name]: value });
+  };
+
+  const handelImages = (e) => {
+    const uploadImages = Array.from(e.target.files);
+    setImages((prev) => uploadImages);
+  };
+  console.log(hotel);
+
+  return (
+    <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      {/* Same as */}
+      <ToastContainer />
+      <h1> Create Hotel </h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Enter Name ..."
+          onChange={handelInputChange}
+          value={name}
+        />
+
+        <label htmlFor="description">description</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          placeholder="Enter description ..."
+          onChange={handelInputChange}
+          value={description}
+        />
+
+        <label htmlFor="price">price</label>
+        <input
+          type="text"
+          id="price"
+          name="price"
+          placeholder="Enter price ..."
+          onChange={handelInputChange}
+          value={price}
+        />
+
+        <label htmlFor="stars">stars</label>
+        <input
+          type="text"
+          id="stars"
+          name="stars"
+          placeholder="Enter stars ..."
+          onChange={handelInputChange}
+          value={stars}
+        />
+
+        <label htmlFor="city">city</label>
+        <input
+          type="text"
+          id="city"
+          name="city"
+          placeholder="Enter city ..."
+          onChange={handelInputChange}
+        />
+
+        <label htmlFor="country">country</label>
+        <input
+          type="text"
+          id="country"
+          name="country"
+          placeholder="Enter country ..."
+          onChange={handelInputChange}
+        />
+
+        <label htmlFor="images">Select files:</label>
+        <input
+          type="file"
+          id="images"
+          name="images"
+          multiple
+          onChange={handelImages}
+        />
+
+        <input type="submit" value="add" />
+      </form>
+
+      {/* <p>{sa}</p> */}
+    </div>
+  );
+}
+
+export default CreateHotel;

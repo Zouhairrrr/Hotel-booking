@@ -89,19 +89,7 @@ exports.deletHotel = async (req, res, next) => {
     }
 };
 
-// Delete all hotels
-// exports.deletallHotels = async (req, res, next) => {
-//     const deleteall = db.inventory.deleteMany({})
-//     try {
-//         const hotel = await Hotel.find();
-//         await hotel.remove();
-//         res.send();
-//     } catch (err) {
-//         res.send(err);
-//     }
-// };
-
-
+// Delete all Hotels
 exports.deletallHotels = (req, res) => {
     Hotel.deleteMany({})
         .then(data => {
@@ -131,7 +119,6 @@ exports.getHotelbyname = async (req, res, next) => {
         res.send(err);
     }
 };
-
 
 
 // Get Hotels by city
