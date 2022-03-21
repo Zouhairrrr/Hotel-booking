@@ -35,7 +35,15 @@ authRouter.post('/forgotPassword',
     authController.ForgotPassword);
 
 authRouter.get('/activateAccount/:token', authController.ActivatePassword);
-authRouter.post('/resetPassword', authController.ResetPassword);
+
+
+authRouter.post('/password-reset',
+    [
+        middleware.PasswordValidate,
+        middleware.ConfirmPassword,
+
+    ]
+    , authController.ResetPassword);
 
 // authRouter.post('/reset-password', authController.ActivateAcount);
 

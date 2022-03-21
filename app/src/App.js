@@ -16,14 +16,14 @@ import ActivateAccount from './components/auth/ActivateAccount'
 
 
 function App() {
- 
+
 
 
   return (
     <>
       <Router>
         <Routes>
-          <Route exact path="/" element={<Home />}></Route>
+          <Route exact path="/" element={<Home />} />
           <Route exact path="/auth/register" element={<CreateUser />} />
           <Route exact path="/auth/login" element={<LoginUser />} />
           <Route exact path="/user/profile" element={<UserProfile />} />

@@ -1,34 +1,45 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 
 function ResetPassword() {
+    const api = axios.create({
+        baseURL: 'http://localhost:8082/',
+        'Content-Type': 'application/json'
+    })
     //* enable navigation
-    // const navigate = useNavigate()
+    const location = useLocation()
     //* inisilize props
     const [password, setPassword] = useState('')
     const [ConfirmPassword, setConfirmPassword] = useState('')
     const [errors, setErrors] = useState('')
-    const [success, setSucsess] = useState('');
-    // const {id, token } = useParams()
+    const [success, setSucsess] = useState('')
+
     //* handle reset password and modify it  
+
+
     const passwordReset = async (data) => {
         try {
-            const response = await axios.post(`http://localhost:8082/auth/resetPassword`, data);
+            const response = await api.post(`auth/password-reset`, data)
             setSucsess(response.data.message);
+            setErrors("")
+            setPassword("");
+            setConfirmPassword("");
         } catch (error) {
             console.error('There was an error!', error.response.data.message);
             setErrors(error.response.data.message)
+            setPassword("");
+            setConfirmPassword("");
         }
     }
     //* handle submit and pass data to resetPassword function
     const handlSubmit = async (event) => {
         event.preventDefault();
-
         const bodyData = {
+            id: location.state,
             password: password,
-            ConfirmPassword: ConfirmPassword,
+            confirmPassword: ConfirmPassword,
         }
         await passwordReset(bodyData)
     }

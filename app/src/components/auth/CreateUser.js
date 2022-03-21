@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
-
 const CreateUser = () => {
 
     const api = axios.create({
         baseURL: 'http://localhost:8082/',
         headers: {
-          'Content-type': 'application/json',
+            'Content-type': 'application/json',
         },
-      })
+    })
     //* enable navigation
     const navigate = useNavigate()
     //* inisilize props
@@ -23,12 +22,10 @@ const CreateUser = () => {
 
 
 
-
     const UserRegister = async (data) => {
         try {
-            const response = await api.post(`auth/register`,data)
+            const response = await api.post(`auth/register`, data)
             setSucsess(response.data.message);
-            // console.log(response)
             setErrors("")
             setTimeout(() => navigate('/auth/login'), 2000);
         } catch (error) {

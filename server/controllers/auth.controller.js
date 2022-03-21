@@ -5,6 +5,11 @@ const dotenv = require('dotenv');
 dotenv.config()
 const SendEmail = require('./services/mail')
 //  * create new user with a client default as role 
+
+
+
+
+
 const CreateNewUser = async (req, res) => {
 
     const data = req.body;
@@ -20,6 +25,9 @@ const CreateNewUser = async (req, res) => {
         }
     })
 }
+
+
+
 
 const Authenticate = async (req, res) => {
     try {
@@ -53,6 +61,8 @@ const Authenticate = async (req, res) => {
 };
 
 
+
+
 const ForgotPassword = async (req, res) => {
     const email = req.body.email;
     const subject = "Reset Password"
@@ -75,45 +85,22 @@ const ForgotPassword = async (req, res) => {
     }
 }
 
+
+
 const ResetPassword = async (req, res) => {
 
-
     const data = req.body;
-    const user = await userModel.find({ id: data._id });
-
-    // const token = req.headers["authorization"].split(" ")[2]
-    // const id = req.headers["authorization"].split(" ")[1]
-    // console.log(id);
-    // console.log(req.params);
-    // if (!token)console.log("eeeee") 
-    // return res.status(400).json({ success: false, message: "invalid link or expired" });
-    // const secret = process.env.ACCESS_TOKEN_SECRET ;
-    // try {
-    //     const paylod = jwt.verify(token, secret)
-
-    // } catch (error) {
-    //     console.log(error.message);
-    //     res.status(401).json({ success: false, message: "invialide token"});
-    // }
-
-
-    // const decoded = jwt.verify(token, secret, (err, res) => {
-    //     if (err) {
-    //         console.log(err);
-    //     }
-    // });
-
-    // console.log(secret);
-    // if (token) {
-    //     jwt.verify(resetLink, process.env.ACCESS_TOKEN_SECRET)
-    // }
-    // User.findOne({ email: email }, (err, user) => {
-    //     if (err || !user) {
-    //         return res.status(401).json({ success: false, message: "email wrong" });
-    //     }
-    // });
+    
+    const user = await userModel.findOneAndUpdate({ id: data._id }, { password: data.password }, { new: true });
+    if (!user) return res.status(403).json({ success: false, message: 'something went wrong trying to reset password try again' });
+    return res.status(200).json({ success: true, message: 'password updated successfully ^_^' });
 
 }
+
+
+
+
+
 const ActivatePassword = async (req, res) => {
     const { token } = req.params;
     const jwtExpirySeconds = 300
