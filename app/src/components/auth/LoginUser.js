@@ -1,54 +1,45 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
-
+import axios from 'axios';
 
 
 function LoginUser() {
     //* enable navigation
     const navigate = useNavigate()
+
     //* inisilize props
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [remeberme, setremeberme] = useState(false)
-    const [errors, setErrors] = useState('')
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    // const [remeberme, setremeberme] = useState(false)
+    const [errors, setErrors] = useState('');
+    const [success, setSucsess] = useState('');
 
     //* handle login 
-    const handlSumit = async (event) => {
 
+    const VerifyUserLogin = async (data) => {
+        try {
+            const response = await axios.post(`http://localhost:8082/auth/login`, data)
+            setSucsess(response.data.message);
+            setErrors("")
+            console.log(response.data.data.token)
+            setTimeout(() => navigate('/user/profile'), 2000);
+        } catch (error) {
+            console.error('There was an error!', error.response.data.message);
+            setErrors(error.response.data.message)
+            setEmail("");
+            setPassword("");
+        }
+    }
+    //* handle submit and pass data to VerifyUserLogin function
+    const handlSubmit = async (event) => {
         event.preventDefault();
         const bodyData = {
             email: email,
             password: password,
-            remeberme: remeberme,
+            // remeberme: remeberme,
         }
-        await fetch('http://localhost:8081/auth/login', {
-            method: 'POST',
-            body: JSON.stringify(bodyData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(async response => {
-                const isJson = response.headers.get('content-type')?.includes('application/json');
-                const data = isJson ? await response.json() : null;
-                // check for error response
-                if (!response.ok) {
-                    // get error message from body or default to response status
-                    const error = (data && data.message) || response.status;
-                    return Promise.reject(error);
-                } else {
-
-                }
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-                setErrors(error)
-            });
-
-        if (!errors) {
-            navigate('/user/profile')
-        }
+        await VerifyUserLogin(bodyData)
     }
     return (
         <>
@@ -72,7 +63,7 @@ function LoginUser() {
                             <p className="text-white">HELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLO.</p>
                             <div className="btn-wrapper">
                                 <Link to="/" className="btn btn-success">Login Page</Link>
-                                <Link to="/register" className="btn btn-white">Register Page</Link>
+                                <Link to="/auth/register" className="btn btn-white">Register Page</Link>
                             </div>
                         </div>
                         <div className="col-lg-5 mb-lg-auto">
@@ -102,8 +93,9 @@ function LoginUser() {
                                             <small>Or sign in with credentials</small>
 
                                         </div>
-                                        <form method="post" onSubmit={handlSumit}>
-                                            {errors && <span>{errors}</span>}
+                                        <form method="post" onSubmit={handlSubmit}>
+                                            {errors && <span className="badge badge-pill badge-warning text-uppercase">{errors}</span>}
+                                            {success && <span className="badge badge-pill badge-success text-uppercase">{success}</span>}
                                             <div className="form-group mb-3">
                                                 <div className="input-group input-group-alternative">
                                                     <div className="input-group-prepend">
@@ -121,11 +113,9 @@ function LoginUser() {
                                                     <input className="form-control" name="password" placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                                                 </div>
                                             </div>
-                                            <div className="custom-control custom-control-alternative custom-checkbox">
-                                                <input className="custom-control-input" name="remeberme" id=" customCheckLogin2" checked={remeberme} onChange={(e) => setremeberme(prev => !prev)} type="checkbox" />
-                                                <label className="custom-control-label" htmlFor=" customCheckLogin2">
-                                                    <span>Remember me</span>
-                                                </label>
+                                            <div className="custom-control">
+                                                <span>Forgot Password?</span>
+                                                <Link to="/auth/forgotPassword" className="badge badge-pill badge-info text-uppercase" >Here!</Link>
                                             </div>
                                             <div className="text-center">
                                                 <button type="submit" className="btn btn-primary my-4">Sign in</button>

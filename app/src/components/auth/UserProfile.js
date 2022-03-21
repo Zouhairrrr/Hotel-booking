@@ -1,6 +1,52 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+// import axios from 'axios';
+
+
 
 function UserProfile() {
+
+
+    // try {
+    //     const response = await axios.post(`http://localhost:8082/auth/register`, data)
+    //     const bodyData = response.json();
+    //     //* check for error response
+    //     if (bodyData.success === false) {
+    //         //* get error message from body or default to response status
+    //         const error = (bodyData.message) || response.status;
+    //         return Promise.reject(error);
+    //     }
+    //     const success = (bodyData.message) || response.status;
+    //     setSucsess(success);
+    //     if (success) setTimeout(() => navigate('/auth/login'), 2000);
+
+    // } catch (error) {
+    //     console.error('There was an error!', error);
+    //     setErrors(error)
+    // }
+
+    // await fetch('http://localhost:8082/auth/register', {
+    //     method: 'POST',
+    //     body: JSON.stringify(data),
+    //     headers: { 'Content-Type': 'application/json' },
+    // })
+    // .then(async response => {
+    //     const isJson = response.headers.get('content-type')?.includes('application/json');
+    //     const bodyData = isJson ? await response.json() : null;
+    //     //* check for error response
+    //     if (bodyData.success === false) {
+    //         //* get error message from body or default to response status
+    //         const error = (bodyData.message) || response.status;
+    //         return Promise.reject(error);
+    //     }
+    //     const success = (bodyData && bodyData.message) || response.status;
+    //     setSucsess(success);
+    //     setErrors("")
+    //     if (success) setTimeout(() => navigate('/auth/login'), 2000);
+    // }).catch((error) => {
+    //     console.error('There was an error!', error);
+    //     setErrors(error.message)
+    // });
     return (
         <>
             <main className="profile-page">
@@ -22,15 +68,15 @@ function UserProfile() {
                                 <div className="row justify-content-center">
                                     <div className="col-lg-3 order-lg-2">
                                         <div className="card-profile-image">
-                                            <a href="#">
-                                                <img src="../assets/img/theme/team-4-800x800.jpg" className="rounded-circle" alt="Team"/>
-                                            </a>
+                                            <Link to="/">
+                                                <img src="../assets/img/theme/team-4-800x800.jpg" className="rounded-circle" alt="Team" />
+                                            </Link>
                                         </div>
                                     </div>
                                     <div className="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                                         <div className="card-profile-actions py-4 mt-lg-0">
-                                            <a href="#" className="btn btn-sm btn-info mr-4">Connect</a>
-                                            <a href="#" className="btn btn-sm btn-default float-right">Message</a>
+                                            <Link to="/" className="btn btn-sm btn-info mr-4">Connect</Link>
+                                            <Link to="/" className="btn btn-sm btn-default float-right">Message</Link>
                                         </div>
                                     </div>
                                     <div className="col-lg-4 order-lg-1">
@@ -62,7 +108,7 @@ function UserProfile() {
                                     <div className="row justify-content-center">
                                         <div className="col-lg-9">
                                             <p>An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.</p>
-                                            <a href="#">Show more</a>
+                                            <Link to="/">Show more</Link>
                                         </div>
                                     </div>
                                 </div>

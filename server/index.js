@@ -6,9 +6,9 @@ const userRoute = require('./router/user.routes')
 const roomsRoute = require('./router/room.routes')
 const hotelRoute = require('./router/hotel.routes');
 const reservationRoute = require('./router/reservation.routes')
-
-const dbConfig = require('./config/config')
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.DB_PORT;
+const dotenv = require('dotenv');
+dotenv.config()
 const app = express();
 const cookieSession = require('cookie-session');
 
@@ -20,7 +20,7 @@ app.use(cookieSession({
 }))
 
 const corsOptions = {
-    origin: "http://localhost:8080",
+    origin: 'http://localhost:3000',
     optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
@@ -42,7 +42,7 @@ app.use('/hotel', hotelRoute);
 //! conncection to database : 
 
 mongoose
-    .connect(dbConfig.database.url, {
+    .connect(process.env.DATABASE_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })

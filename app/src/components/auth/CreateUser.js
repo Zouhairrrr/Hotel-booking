@@ -1,14 +1,59 @@
-import React from 'react';
-import { Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
+import axios from 'axios';
 
 const CreateUser = () => {
 
+    const api = axios.create({
+        baseURL: 'http://localhost:8082/',
+        headers: {
+          'Content-type': 'application/json',
+        },
+      })
+    //* enable navigation
+    const navigate = useNavigate()
+    //* inisilize props
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [errors, setErrors] = useState('')
+    const [success, setSucsess] = useState('')
 
 
+
+
+
+    const UserRegister = async (data) => {
+        try {
+            const response = await api.post(`auth/register`,data)
+            setSucsess(response.data.message);
+            // console.log(response)
+            setErrors("")
+            setTimeout(() => navigate('/auth/login'), 2000);
+        } catch (error) {
+            console.error('There was an error!', error.response.data.message);
+            setErrors(error.response.data.message)
+            setName("");
+            setEmail("");
+            setPassword("");
+        }
+    }
+    const HandleSumit = async (event) => {
+        event.preventDefault()
+        const data = {
+            name: name,
+            email: email,
+            password: password
+        };
+        await UserRegister(data);
+    }
     return (
         <>
             <section className="section section-shaped section-lg my-0">
+
+
+
                 <div className="shape shape-style-1 shape-zah">
                     <span></span>
                     <span></span>
@@ -46,7 +91,10 @@ const CreateUser = () => {
                                     <div className="text-center text-muted mb-4">
                                         <small>Or sign up with credentials</small>
                                     </div>
-                                    <form method="post" >
+                                    <form method="post" onSubmit={HandleSumit}>
+
+                                        {success && <span className="badge badge-pill badge-success text-uppercase">{success}</span>}
+                                        {errors && <span className="badge badge-pill badge-warning text-uppercase">{errors}</span>}
                                         <div className="form-group">
                                             <div className="input-group input-group-alternative mb-3">
                                                 <div className="input-group-prepend">
@@ -54,6 +102,8 @@ const CreateUser = () => {
                                                 </div>
                                                 <input
                                                     name="name"
+                                                    value={name}
+                                                    onChange={(e) => setName(e.target.value)}
                                                     className="form-control" placeholder="Name" type="text"
                                                 />
                                             </div>
@@ -65,6 +115,9 @@ const CreateUser = () => {
                                                 </div>
                                                 <input
                                                     name="email"
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+
                                                     className="form-control" placeholder="Email" type="email" />
                                             </div>
                                         </div>
@@ -75,7 +128,8 @@ const CreateUser = () => {
                                                 </div>
                                                 <input
                                                     name="password"
-                                                    // onChange={(e) => setPassword(e.target.value)}
+                                                    value={password}
+                                                    onChange={(e) => setPassword(e.target.value)}
                                                     className="form-control" placeholder="Password" type="password" />
                                             </div>
                                         </div>
@@ -89,15 +143,15 @@ const CreateUser = () => {
                                                 <div className="custom-control custom-control-alternative custom-checkbox">
                                                     <input className="custom-control-input" id="customCheckRegister" type="checkbox" />
                                                     <label className="custom-control-label" htmlFor="customCheckRegister">
-                                                        <span>Already registered?
-                                                            <Link to="/">LOGIN</Link>
+                                                        <span> Already registered?
+                                                            <Link to="/auth/login">LOGIN</Link>
                                                         </span>
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="text-center">
-                                            <button type="button" className="btn btn-primary mt-4">Create account</button>
+                                            <button type="submit" className="btn btn-primary mt-4">Create account</button>
                                         </div>
                                     </form>
                                 </div>

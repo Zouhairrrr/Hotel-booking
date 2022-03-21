@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
     {
+        
         name: { type: String, required: true },
         password: {
             type: String,
@@ -15,11 +16,15 @@ const UserSchema = new Schema(
             enum: ['client', 'admin', 'owner'],
             default: 'client',
         },
+        profileImage: { type: String, required: false }
     },
+    // {
+    //     resetLink:
+    //         { type: String, required: true }
+    // },
     {
         timestamps: {
             createdAt: "created_at",
-            updatedAt: "updated_at",
         },
     },
 
