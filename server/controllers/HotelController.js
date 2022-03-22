@@ -4,7 +4,7 @@ const Hotel = require("../models/HotelModel");
 // Create Hotel
 exports.createHotel = async (req, res, next) => {
     const images = req.files.map((file) => {
-        return file.path
+        return file.filename
     })
     const {
         city,

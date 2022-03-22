@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import './hotel.css'
 
 function ShowHotel() {
   const [data, setData] = useState([]);
@@ -17,7 +18,7 @@ function ShowHotel() {
       }
   };
 
-  console.log("data=>",data);
+//   console.log("data=>",data);
   
   return (
     <div>
@@ -44,9 +45,17 @@ function ShowHotel() {
                         <td>{item.description}</td>   
                         <td>{item.price}</td>   
                         <td>{item.stars}</td>   
-                        <td>{item.localisation.city}</td>   
-                        <td>{item.localisation.country}</td>   
-                        <td>{item.images}</td>  
+                        <td>{item.localisation?.city}</td>   
+                        <td>{item.localisation?.country}</td>   
+                        <td>
+                            {item.images
+                        .map((img)=>{
+                            return(
+                            <img className='img' key = {img} src={"../../assets/images/"+img }  alt="hellll"/>
+                            )
+                         })
+                       } 
+                        </td>  
                         <td>
                             {/* <link to={`/update/${item.id}`}>
                                 <button>Edit</button>    
