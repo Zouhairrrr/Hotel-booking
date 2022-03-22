@@ -29,7 +29,7 @@ function ActivateAccount() {
                     setSuccess(user);
 
                     if (!response.data.success) {
-                        navigate('/auth/ForgotPassword')
+                        navigate('/auth/ForgotPassword');
                         return
                     }
                     setTimeout(() => { navigate('/auth/resetPassword', { state: userId }) }, 2000)

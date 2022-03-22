@@ -36,6 +36,19 @@ function ResetPassword() {
     //* handle submit and pass data to resetPassword function
     const handlSubmit = async (event) => {
         event.preventDefault();
+        µµµµµµµµµµµµµ
+        µµµµµµµµµµµµµµ
+
+
+
+
+
+
+
+
+
+
+        
         const bodyData = {
             id: location.state,
             password: password,
@@ -66,7 +79,7 @@ function ResetPassword() {
                             <p className="text-white">HELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLO.</p>
                             <div className="btn-wrapper">
                                 <Link to="/" className="btn btn-success">Login Page</Link>
-                                <Link to="/register" className="btn btn-white">Register Page</Link>
+                                <Link to="auth/register" className="btn btn-white">Register Page</Link>
                             </div>
                         </div>
                         <div className="col-lg-5 mb-lg-auto">
