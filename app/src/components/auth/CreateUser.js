@@ -19,7 +19,8 @@ const CreateUser = () => {
     const UserRegister = async (data) => {
         try {
             const response = await axios.post(`http://localhost:8082/auth/register`, data)
-            setSucsess(response.data.message);
+            setSucsess(response.data.data.message);
+            console.log(response);
             setErrors("")
             setTimeout(() => navigate('/auth/login'), 2000);
         } catch (error) {

@@ -1,23 +1,41 @@
 const express = require('express');
-const Router = express.Router();
+const authRouter = express.Router();
 const middleware = require('../middleware/auth.middlewares');
 const authController = require('../controllers/auth.controller')
 
-Router.post('/register',
-    [
-        //! valudate user informations before creating
-        middleware.CheckDuplicateUser,
-        middleware.CheckDuplicateEmail,
-        middleware.ValidatePassword
-    ],
+
+//? const RouteGroup = require('express-route-grouping')
+
+authRouter.post('/auth/register',
+
+    //! valudate user informations before creating
+    middleware.validateForm,
+    middleware.CheckDuplicateUser,
+    middleware.CheckDuplicateEmail,
+    middleware.ValidatePassword,
     //* create new User instance
     authController.CreateNewUser
 );
 
-Router.post('/login', middleware.ValidatePassword, authController.Authenticate);
+
+authRouter.post('/auth/login',
+    middleware.validateFormLogin,
+    middleware.ValidateEmailLogin,
+    middleware.ValidatePasswordLogin,
+    authController.Authenticate,
+);
+
+
+// ?  routes for resetPassword
+
+authRouter.post('/auth/forgotPassword', middleware.ValidateemailforPaswwordReset, authController.ForgotPassword);
 
 
 
-Router.post('/api/add-hotel',  )
+authRouter.get('/auth/activateAccount/:token', authController.ActivatePassword);
 
-module.exports = Router;
+
+authRouter.post('/auth/resetPassword', middleware.PasswordValidate, middleware.ConfirmPassword, authController.ResetPassword);
+
+
+module.exports = authRouter;
