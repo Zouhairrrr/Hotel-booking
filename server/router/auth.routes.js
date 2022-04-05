@@ -41,7 +41,6 @@ authRouter.post('/password-reset',
     [
         middleware.PasswordValidate,
         middleware.ConfirmPassword,
-
     ]
     , authController.ResetPassword);
 

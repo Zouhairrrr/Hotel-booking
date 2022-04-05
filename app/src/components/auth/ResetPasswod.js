@@ -36,19 +36,6 @@ function ResetPassword() {
     //* handle submit and pass data to resetPassword function
     const handlSubmit = async (event) => {
         event.preventDefault();
-        µµµµµµµµµµµµµ
-        µµµµµµµµµµµµµµ
-
-
-
-
-
-
-
-
-
-
-        
         const bodyData = {
             id: location.state,
             password: password,
