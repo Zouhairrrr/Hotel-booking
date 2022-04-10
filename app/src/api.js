@@ -1,6 +1,3 @@
-exports default function Api(){
+import axios from 'axios';
 
-    return {
-        axios.create('')   
-    }
-}
+export default axios.create({})

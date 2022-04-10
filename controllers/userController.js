@@ -6,10 +6,7 @@ const createUser = async (req, res) => {
   try {
     const result = userValidation.createValidation(req.body);
     if (result.error)
-      return res
-        .status(400)
-
-        .json({ error: true, message: result.error.message });
+      return res.status(400).json({ error: true, message: result.error.message });
     const checkUser = await User.findOne({ email: result.value.email });
     if (checkUser) return res.json({ message: "Email is already exist" });
     const password = "12345678";

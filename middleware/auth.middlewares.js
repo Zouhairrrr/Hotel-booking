@@ -63,8 +63,8 @@ const validateFormLogin = (req, res, next) => {
         return res.status(400).send({ success: false, message: "All fields is required" });
     }
     next()
-}
 
+}
 
 
 const ValidatePassword = async (req, res, next) => {
